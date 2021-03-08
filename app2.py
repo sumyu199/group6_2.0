@@ -12,7 +12,7 @@ import datetime
 st.title('Stock Market Web Application')
 
 st.markdown("""
-**Visually** show data on a stock!Date range from 2018, 1, 1 to  today
+**Visually** show data on a stock!
  """)
 
 image = Image.open("image.png")
@@ -56,6 +56,13 @@ def filedownload(df):
 
 st.markdown(filedownload(df_selected_sector), unsafe_allow_html=True)
 
+df2 = pd.read_csv('Forex.csv')
+st.header('Display Forex Symbol')
+st.write(df2)
+
+df3 = pd.read_csv('commodities.csv')
+st.header('Display Commodities Symbol')
+st.write(df3)
 
 
 today = datetime.date.today()
@@ -172,7 +179,7 @@ if st.checkbox('Show the Lowest Price'):
    st.plotly_chart(fig)
 
 st.header('Display Indicator Result')
-indicators = [indicator_selection1,indicator_selection2,indicator_selection3,indicator_selection4]
+indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 #Simple Moving Average
 def SMA(data,period = 20, column = 'Close'):
     return data[column].rolling(window = period).mean()
@@ -188,7 +195,7 @@ def sd(data,period = 20,column = 'Close'):
 
 
 #bollinger bands
-indicators = [indicator_selection1,indicator_selection2,indicator_selection3,indicator_selection4]
+indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 for i in indicators:
  data['middle band'] = SMA(data,period = 20, column = 'Close')
  data['upper band'] = SMA(data,period = 20, column = 'Close') + sd(data,period = 20,column = 'Close')*2
