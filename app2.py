@@ -15,7 +15,7 @@ st.markdown("""
 **Visually** show data on a stock!Date range from 2018, 1, 1 to  today
  """)
 
-image = Image.open(r"/Users/ngsumyu/PycharmProjects/stockmarket/venv/image.png")
+image = Image.open("image.png")
 st.image(image,use_column_width=True)
 
 
@@ -66,27 +66,20 @@ def user_input_features():
     #information = st.sidebar.selectbox('Information',('Close','Volume','Canlestick'))
     options = ['Select Indicator','Bollinger bands with RSI','MACD', 'OBV','any']
     indicator_selection1 = st.sidebar.selectbox(
-        label='Indicators Combo 1',
+        label='Indicator 1',
         options=options)
 
     indicator_selection2 = st.sidebar.selectbox(
-         label = 'Indicator Combo 2',
+         label = 'Indicator 2',
          options = options)
 
     indicator_selection3 = st.sidebar.selectbox(
-         label = 'Indicator Combo 3',
+         label = 'Indicator 3',
          options = options)
 
-    indicator_selection4 = st.sidebar.selectbox(
-         label = 'Indicator Combo 4',
-         options = options)
+    return ticker, start_date, end_date,indicator_selection1,indicator_selection2,indicator_selection3
 
-
-    prediction = st.sidebar.slider('Forecasting Range',1,30,5,1)
-
-    return ticker, start_date, end_date,indicator_selection1,indicator_selection2,indicator_selection3,indicator_selection4,prediction
-
-symbol, start, end , indicator_selection1,indicator_selection2,indicator_selection3,indicator_selection4 ,prediction = user_input_features()
+symbol, start, end , indicator_selection1,indicator_selection2,indicator_selection3 = user_input_features()
 
 def get_symbol(symbol):
     url = "http://d.yimg.com/autoc.finance.yahoo.com/autoc?query={}&region=1&lang=en".format(symbol)
