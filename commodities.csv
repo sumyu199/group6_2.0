@@ -1,12 +1,12 @@
 ﻿Commodities ,Symbol
 GOLD FUTURES,GC=F
-Silver May 21,SI=F
-Copper May 21,HG=F
+Silver FUTURES,SI=F
+Copper FUTURES,HG=F
 CRUDE OIL,CL=F
 Brent Crude Oil ,BZ=F
-Natural Gas Apr 21,NG=F
-"Corn Futures,May-2021",ZC=F
-"KC HRW Wheat Futures,May-2021",KE=F
-Coffee May 21,KC=F
-Cotton May 21,CT=F
-Sugar #11 May 21,SB=F
+Natural Gas FUTURES,NG=F
+"Corn Futures,FUTURES",ZC=F
+"KC HRW Wheat FUTURES",KE=F
+Coffee FUTURES,KC=F
+Cotton FUTURES,CT=F
+Sugar FUTURES,SB=F
