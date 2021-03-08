@@ -204,7 +204,7 @@ def profit(data,buy_col,sell_col):
     new_buy = new_buy['Buy'].sum()
     new_sell =new[new['Sell'].notna()]
     new_sell = new_sell['Sell'].sum()
-    profit = new_sell-new_buy
+    profit = new_sell*0.9997-new_buy
     return profit
 
 #bollinger bands
