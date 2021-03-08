@@ -71,7 +71,7 @@ def user_input_features():
     start_date = st.sidebar.date_input('start date', datetime.date(2018,1,1))
     end_date = st.sidebar.date_input("End Date", today)
     #information = st.sidebar.selectbox('Information',('Close','Volume','Canlestick'))
-    options = ['Select Indicator','Bollinger bands with RSI','MACD', 'OBV','any']
+    options = ['Select Indicator','Bollinger Bands with RSI','MACD', 'OBV']
     indicator_selection1 = st.sidebar.selectbox(
         label='Indicator 1',
         options=options)
@@ -194,6 +194,19 @@ def sd(data,period = 20,column = 'Close'):
     return data[column].rolling(window = period).std()
 
 
+
+#profit
+def profit(data,buy_col,sell_col):
+    new = pd.DataFrame()
+    new['Buy'] = data[buy_col]
+    new['Sell'] = data[sell_col]
+    new_buy = new[new['Buy'].notna()]
+    new_buy = new_buy['Buy'].sum()
+    new_sell =new[new['Sell'].notna()]
+    new_sell = new_sell['Sell'].sum()
+    profit = new_sell-new_buy
+    return profit
+
 #bollinger bands
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 for i in indicators:
@@ -205,7 +218,7 @@ for i in indicators:
  # RSI (Relative Strength Index)
  # RSI
 
- if i =='Bollinger bands with RSI':
+ if i =='Bollinger Bands with RSI':
      def RSI(data, period=14, column='Close'):
          delta = data[column].diff(1)
          delta = delta[1:]
@@ -280,8 +293,11 @@ for i in indicators:
          width=800,
          height=600,
          xaxis_title="Date")
-     st.header(f"Bollinger bands\n {company_name}")
+     st.header(f"Bollinger Bands\n {company_name}")
      st.plotly_chart(fig)
+
+     profit_B = profit(data,'BB_Buy_Signal_Price','BB_Sell_Signal_Price')
+     st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
 
      fig = go.Figure()
      # Add traces
@@ -408,6 +424,7 @@ for i in indicators:
          xaxis_title="Date")
      st.header(f"Moving Average Convergence Divergence\n {company_name}")
      st.plotly_chart(fig)
+
      fig = go.Figure()
 
 # Add traces
@@ -436,6 +453,9 @@ for i in indicators:
       height=600)
      st.header(f"MACD Signal\n {company_name}")
      st.plotly_chart(fig)
+     profit_M = profit(data,'MACD_Buy_Signal_Price','MACD_Sell_Signal_Price')
+     st.write(f"Profit of {company_name} based on MACD is ${profit_M}")
+
      st.write("If MACD is **above signal line with bullish signal**,Then we are going to look place a **BUY TRADE**. ")
      st.write("If MACD is **above signal line with bearish signal**,Then we are going to look place a **SELL TRADE**. ")
 
@@ -529,5 +549,7 @@ for i in indicators:
          height=600)
      st.header(f"OBV Signal\n {company_name}")
      st.plotly_chart(fig)
+     profit_O = profit(data,'OBV_Buy_Signal_Price','OBV_Sell_Signal_Price')
+     st.write(f"Profit of {company_name} based on OBV is ${profit_O}")
      st.write('If **OBV > OBV_EMA**,Then we are going to look place a **BUY TRADE**.')
      st.write('If **OBV < OBV_EMA**,Then we are going to look place a **SELL TRADE**.')
