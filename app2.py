@@ -337,9 +337,9 @@ for i in indicators:
          autosize=False,
          width=800,
          height=600)
-     fig.add_hline(y = 75,line_dash="dot",annotation_text="75 RSI",
+     fig.add_hline(y = 70,line_dash="dot",annotation_text="70 RSI",
               annotation_position="bottom right")
-     fig.add_hline(y = 25,line_dash="dot",annotation_text="25 RSI",
+     fig.add_hline(y = 30,line_dash="dot",annotation_text="30 RSI",
               annotation_position="bottom right")
      st.header(f"Relative Strength Index\n {company_name}")
      st.plotly_chart(fig)
@@ -348,9 +348,9 @@ for i in indicators:
      profit_B = profit(data,'BB_Buy_Signal_Price','BB_Sell_Signal_Price')
      st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
      st.write("If price close outside of the upper Bollinger Band,Then we are going to look place a **SELL TRADE**.")
-     st.write("If looking to sell,wait for **RSI > 75** Before entering")
+     st.write("If looking to sell,wait for **RSI > 70** Before entering")
      st.write("If price close outside of the lower Bollinger Band,Then we are going to look place a **BUY TRADE**.")
-     st.write("If looking to Buy,Wait for **RSI < 25** Before entering")
+     st.write("If looking to Buy,Wait for **RSI < 30** Before entering")
 
 # MACD (Moving Average Convergence Divergence)
  if i =='MACD':
