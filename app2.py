@@ -104,7 +104,7 @@ data = web.DataReader(symbol,'yahoo', start, end)
 data.to_csv('histdata.csv')
 data = pd.read_csv('histdata.csv')
 data = data.set_index(pd.DatetimeIndex(data['Date'].values))
-
+#visualising
 fig = go.Figure()
 fig.add_trace(
     go.Candlestick(x=data["Date"], open=data["Open"],
@@ -117,7 +117,8 @@ st.header(f"Daily Candlestick Chart\n {company_name}")
 st.plotly_chart(fig)
 
 
-# Adjusted Close Price
+#Close Price
+#visualising
 if st.checkbox('Show Close Price'):
    fig = go.Figure()
    # Add traces
@@ -133,6 +134,7 @@ if st.checkbox('Show Close Price'):
    st.header(f"Adjusted Close Price\n {company_name}")
    st.plotly_chart(fig)
 #Volume
+#visualising
 if st.checkbox('Show the Volume'):
    fig = go.Figure()
    # Add traces
@@ -148,6 +150,7 @@ if st.checkbox('Show the Volume'):
    st.header(f"Volume\n {company_name}")
    st.plotly_chart(fig)
 # High
+#visualising
 if st.checkbox('Show the Highest Price'):
    fig = go.Figure()
    # Add traces
@@ -162,7 +165,7 @@ if st.checkbox('Show the Highest Price'):
        height=600)
    st.header(f"High Price\n {company_name}")
    st.plotly_chart(fig)
-
+#visualising
 if st.checkbox('Show the Lowest Price'):
    fig = go.Figure()
    # Add traces
@@ -207,18 +210,16 @@ def profit(data,buy_col,sell_col):
     profit = new_sell*0.9997-new_buy
     return profit
 
-#bollinger bands
+
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 for i in indicators:
- data['middle band'] = SMA(data,period = 20, column = 'Close')
- data['upper band'] = SMA(data,period = 20, column = 'Close') + sd(data,period = 20,column = 'Close')*2
- data['lower band'] = SMA(data,period = 20, column = 'Close') - sd(data,period = 20,column = 'Close')*2
-
-
- # RSI (Relative Strength Index)
- # RSI
 
  if i =='Bollinger Bands with RSI':
+     # bollinger bands
+     data['middle band'] = SMA(data, period=20, column='Close')
+     data['upper band'] = SMA(data, period=20, column='Close') + sd(data, period=20, column='Close') * 2
+     data['lower band'] = SMA(data, period=20, column='Close') - sd(data, period=20, column='Close') * 2
+     # RSI (Relative Strength Index)
      def RSI(data, period=14, column='Close'):
          delta = data[column].diff(1)
          delta = delta[1:]
@@ -242,7 +243,7 @@ for i in indicators:
 
 
      RSI(data, period=14, column='Close')
-
+     #buy sell signal of BB
      def buy_sell(data,close,upper_band,lower_band):
          Buysignal = []
          Sellsignal = []
@@ -265,6 +266,8 @@ for i in indicators:
 
      data['BB_Buy_Signal_Price'] = b[0]
      data['BB_Sell_Signal_Price'] = b[1]
+
+     # visualising
      fig = go.Figure()
 
 # Add traces
@@ -299,6 +302,7 @@ for i in indicators:
      profit_B = profit(data,'BB_Buy_Signal_Price','BB_Sell_Signal_Price')
      st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
 
+     # visualising
      fig = go.Figure()
      # Add traces
      fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'],
@@ -326,6 +330,7 @@ for i in indicators:
          height=600)
      st.header(f"Bollinger Band Signal\n {company_name}")
      st.plotly_chart(fig)
+     # visualising
      fig = go.Figure()
      fig.add_trace(go.Scatter(x=data["Date"], y=data['RSI_SMA'],
                               mode='lines',
@@ -342,17 +347,12 @@ for i in indicators:
      st.header(f"Relative Strength Index\n {company_name}")
      st.plotly_chart(fig)
 
-     fig = go.Figure()
      st.write("If price close outside of the upper Bollinger Band,Then we are going to look place a **SELL TRADE**.")
      st.write("If looking to sell,wait for **RSI > 75** Before entering")
      st.write("If price close outside of the lower Bollinger Band,Then we are going to look place a **BUY TRADE**.")
      st.write("If looking to Buy,Wait for **RSI < 25** Before entering")
 
-# ## MACD (Moving Average Convergence Divergence)
-# MACD
-
-
-
+# MACD (Moving Average Convergence Divergence)
  if i =='MACD':
      def MACD(data, period_long=26, period_short=12, period_signal=9, column='Close'):
          # Calculate the Short term exponential moving average
@@ -369,7 +369,7 @@ for i in indicators:
      MACD(data, period_long=26, period_short=12, period_signal=9, column='Close')
 
 
-     # buy signal and sell signal
+     # buy signal and sell signal of MACD
      def buy_sell(data, MACD, Signal):
          Buysignal = []
          Sellsignal = []
@@ -403,7 +403,7 @@ for i in indicators:
 
      data['MACD_Buy_Signal_Price'] = a[0]
      data['MACD_Sell_Signal_Price'] = a[1]
-
+     #visualising
      fig = go.Figure()
 
     # Add traces
@@ -521,6 +521,7 @@ for i in indicators:
      fig.update_yaxes(title_text='Value')
      st.header(f"Daily Candlestick Chart with OBV\n {company_name}")
      st.plotly_chart(fig)
+     # visualising
      fig = go.Figure()
 
      # Add traces
