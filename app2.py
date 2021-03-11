@@ -299,9 +299,6 @@ for i in indicators:
      st.header(f"Bollinger Bands\n {company_name}")
      st.plotly_chart(fig)
 
-     profit_B = profit(data,'BB_Buy_Signal_Price','BB_Sell_Signal_Price')
-     st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
-
      # visualising
      fig = go.Figure()
      # Add traces
@@ -347,6 +344,9 @@ for i in indicators:
      st.header(f"Relative Strength Index\n {company_name}")
      st.plotly_chart(fig)
 
+
+     profit_B = profit(data,'BB_Buy_Signal_Price','BB_Sell_Signal_Price')
+     st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
      st.write("If price close outside of the upper Bollinger Band,Then we are going to look place a **SELL TRADE**.")
      st.write("If looking to sell,wait for **RSI > 75** Before entering")
      st.write("If price close outside of the lower Bollinger Band,Then we are going to look place a **BUY TRADE**.")
