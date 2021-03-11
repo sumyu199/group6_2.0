@@ -457,7 +457,7 @@ for i in indicators:
      st.write(f"Profit of {company_name} based on MACD is ${profit_M}")
 
      st.write("If MACD is **above signal line with bullish signal**,Then we are going to look place a **BUY TRADE**. ")
-     st.write("If MACD is **above signal line with bearish signal**,Then we are going to look place a **SELL TRADE**. ")
+     st.write("If MACD is **below signal line with bearish signal**,Then we are going to look place a **SELL TRADE**. ")
 
 #on-balance volume
  if i == 'OBV':
