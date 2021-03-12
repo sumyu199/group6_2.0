@@ -272,37 +272,6 @@ for i in indicators:
      fig = go.Figure()
 
 # Add traces
-     fig.add_trace(go.Scatter(x= data['Date'], y=data['middle band'],
-                    mode='lines',
-                    name='middle band',
-                    line = dict(
-                    color = 'DodgerBlue')))
-     fig.add_trace(go.Scatter(x= data['Date'], y=data['upper band'],
-                    mode='lines',
-                    name='upper band',
-                    line = dict(
-                    color = 'DarkOrange')))
-     fig.add_trace(go.Scatter(x=data['Date'], y=data['lower band'],
-                              mode='lines',
-                              name='lower band',
-                              line=dict(
-                              color='IndianRed')))
-
-     if st.checkbox('Show with the Candlestick'):
-       fig.add_trace(go.Candlestick(x=data["Date"], open=data["Open"],
-                                high=data["High"], low=data["Low"],
-                                close=data["Close"],name = 'Candle Stick'))
-     fig.update_layout(
-         autosize=False,
-         width=800,
-         height=600,
-         xaxis_title="Date")
-     st.header(f"Bollinger Bands\n {company_name}")
-     st.plotly_chart(fig)
-
-     # visualising
-     fig = go.Figure()
-     # Add traces
      fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'],
                               mode='lines',
                               name='Close Price',
@@ -322,12 +291,27 @@ for i in indicators:
                               marker=dict(
                                   color='red',
                                   opacity=1)))
+
+     if st.checkbox('Show the upper band and lower band'):
+        fig.add_trace(go.Scatter(x= data['Date'], y=data['upper band'],
+                    mode='lines',
+                    name='upper band',
+                    line = dict(
+                    color = 'DarkOrange')))
+        fig.add_trace(go.Scatter(x=data['Date'], y=data['lower band'],
+                              mode='lines',
+                              name='lower band',
+                              line=dict(
+                              color='IndianRed')))
+
      fig.update_layout(
          autosize=False,
          width=800,
-         height=600)
-     st.header(f"Bollinger Band Signal\n {company_name}")
+         height=600,
+         xaxis_title="Date")
+     st.header(f"Bollinger Bands Signal\n {company_name}")
      st.plotly_chart(fig)
+
      # visualising
      fig = go.Figure()
      fig.add_trace(go.Scatter(x=data["Date"], y=data['RSI_SMA'],
