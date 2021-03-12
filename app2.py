@@ -25,7 +25,7 @@ st.write("2.Enter a Ticker")
 st.write("3.Enter a Start Date and End Date ")
 st.write("4.Choose Indicator")
 st.write("5.Check the boxes if you want to know more about the Stock")
-st.write("6.Follow the instruction of the indicators to Interpret the Indicator")
+st.write("6.Follow the instruction of the indicators to Interpret the Indicators")
 #create a sidebar header
 st.sidebar.header('User Input Parameter')
 
