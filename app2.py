@@ -15,7 +15,7 @@ st.markdown("""
 **Visually** show data on a stock!
  """)
 
-image = Image.open("image.png")
+image = Image.open("image2.png")
 st.image(image,use_column_width=True)
 
 
@@ -42,7 +42,7 @@ selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique, sorted_
 # Filtering data
 df_selected_sector = df[ (df['GICS Sector'].isin(selected_sector)) ]
 
-st.header('Display Companies in Selected Sector')
+st.header('Companies in Selected Sector')
 st.write('Data Dimension: ' + str(df_selected_sector.shape[0]) + ' rows and ' + str(df_selected_sector.shape[1]) + ' columns.')
 st.dataframe(df_selected_sector)
 
@@ -57,11 +57,11 @@ def filedownload(df):
 st.markdown(filedownload(df_selected_sector), unsafe_allow_html=True)
 
 df2 = pd.read_csv('Forex.csv')
-st.header('Display Forex Symbol')
+st.header('Forex Symbol')
 st.write(df2)
 
 df3 = pd.read_csv('commodities.csv')
-st.header('Display Commodities Symbol')
+st.header('Commodities Symbol')
 st.write(df3)
 
 
@@ -105,16 +105,17 @@ data.to_csv('histdata.csv')
 data = pd.read_csv('histdata.csv')
 data = data.set_index(pd.DatetimeIndex(data['Date'].values))
 #visualising
-fig = go.Figure()
-fig.add_trace(
-    go.Candlestick(x=data["Date"], open=data["Open"],
+if st.checkbox('Show Daily Candlestick Chart'):
+    fig = go.Figure()
+    fig.add_trace(
+            go.Candlestick(x=data["Date"], open=data["Open"],
                    high=data["High"], low=data["Low"], close=data["Close"]))
-fig.update_layout(
-    autosize=False,
-    width=800,
-    height=600)
-st.header(f"Daily Candlestick Chart\n {company_name}")
-st.plotly_chart(fig)
+    fig.update_layout(
+        autosize=False,
+        width=800,
+        height=600)
+    st.header(f"Daily Candlestick Chart\n {company_name}")
+    st.plotly_chart(fig)
 
 
 #Close Price
@@ -181,7 +182,7 @@ if st.checkbox('Show the Lowest Price'):
    st.header(f"Low Price\n {company_name}")
    st.plotly_chart(fig)
 
-st.header('Display Indicator Result')
+st.header('Indicator Result')
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 #Simple Moving Average
 def SMA(data,period = 20, column = 'Close'):
