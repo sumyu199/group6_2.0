@@ -277,6 +277,17 @@ for i in indicators:
                               name='Close Price',
                               line=dict(
                                   color='LightSkyBlue')))
+     if st.checkbox('Show the upper band and lower band'):
+        fig.add_trace(go.Scatter(x= data['Date'], y=data['upper band'],
+                    mode='lines',
+                    name='upper band',
+                    line = dict(
+                    color = 'DarkOrange')))
+        fig.add_trace(go.Scatter(x=data['Date'], y=data['lower band'],
+                              mode='lines',
+                              name='lower band',
+                              line=dict(
+                              color='IndianRed')))
      fig.add_trace(go.Scatter(x=data['Date'], y=data['BB_Buy_Signal_Price'],
                               mode='markers',
                               marker_symbol='triangle-up',
@@ -292,17 +303,7 @@ for i in indicators:
                                   color='red',
                                   opacity=1)))
 
-     if st.checkbox('Show the upper band and lower band'):
-        fig.add_trace(go.Scatter(x= data['Date'], y=data['upper band'],
-                    mode='lines',
-                    name='upper band',
-                    line = dict(
-                    color = 'DarkOrange')))
-        fig.add_trace(go.Scatter(x=data['Date'], y=data['lower band'],
-                              mode='lines',
-                              name='lower band',
-                              line=dict(
-                              color='IndianRed')))
+
 
      fig.update_layout(
          autosize=False,
