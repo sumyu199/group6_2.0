@@ -293,6 +293,7 @@ for i in indicators:
                               marker_symbol='triangle-up',
                               name='Buy',
                               marker=dict(
+                                  size=10,
                                   color='green',
                                   opacity=1)))
      fig.add_trace(go.Scatter(x=data['Date'], y=data['BB_Sell_Signal_Price'],
@@ -300,6 +301,7 @@ for i in indicators:
                               marker_symbol='triangle-down',
                               name='Sell',
                               marker=dict(
+                                  size=10,
                                   color='red',
                                   opacity=1)))
 
