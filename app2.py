@@ -305,14 +305,16 @@ for i in indicators:
                                   color='red',
                                   opacity=1)))
 
-
-
      fig.update_layout(
          autosize=False,
          width=800,
          height=600,
          xaxis_title="Date")
      st.header(f"Bollinger Bands Signal\n {company_name}")
+     profit_B = profit(data,'BB_Buy_Signal_Price','BB_Sell_Signal_Price')
+     st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
+     st.write("If price close outside of the upper Bollinger Band,Then we are going to look place a **SELL TRADE**.")
+     st.write("If price close outside of the lower Bollinger Band,Then we are going to look place a **BUY TRADE**.")
      st.plotly_chart(fig)
 
      # visualising
@@ -330,15 +332,12 @@ for i in indicators:
      fig.add_hline(y = 30,line_dash="dot",annotation_text="30 RSI",
               annotation_position="bottom right")
      st.header(f"Relative Strength Index\n {company_name}")
+     st.write("If looking to sell,wait for **RSI > 70** Before entering")
+     st.write("If looking to Buy,Wait for **RSI < 30** Before entering")
      st.plotly_chart(fig)
 
 
-     profit_B = profit(data,'BB_Buy_Signal_Price','BB_Sell_Signal_Price')
-     st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
-     st.write("If price close outside of the upper Bollinger Band,Then we are going to look place a **SELL TRADE**.")
-     st.write("If looking to sell,wait for **RSI > 70** Before entering")
-     st.write("If price close outside of the lower Bollinger Band,Then we are going to look place a **BUY TRADE**.")
-     st.write("If looking to Buy,Wait for **RSI < 30** Before entering")
+
 
 # MACD (Moving Average Convergence Divergence)
  if i =='MACD':
@@ -440,12 +439,13 @@ for i in indicators:
       width=800,
       height=600)
      st.header(f"MACD Signal\n {company_name}")
-     st.plotly_chart(fig)
      profit_M = profit(data,'MACD_Buy_Signal_Price','MACD_Sell_Signal_Price')
      st.write(f"Profit of {company_name} based on MACD is ${profit_M}")
-
      st.write("If MACD is **above signal line with bullish signal**,Then we are going to look place a **BUY TRADE**. ")
      st.write("If MACD is **below signal line with bearish signal**,Then we are going to look place a **SELL TRADE**. ")
+     st.plotly_chart(fig)
+
+
 
 #on-balance volume
  if i == 'OBV':
@@ -537,8 +537,9 @@ for i in indicators:
          width=800,
          height=600)
      st.header(f"OBV Signal\n {company_name}")
-     st.plotly_chart(fig)
      profit_O = profit(data,'OBV_Buy_Signal_Price','OBV_Sell_Signal_Price')
      st.write(f"Profit of {company_name} based on OBV is ${profit_O}")
      st.write('If **OBV > OBV_EMA**,Then we are going to look place a **BUY TRADE**.')
      st.write('If **OBV < OBV_EMA**,Then we are going to look place a **SELL TRADE**.')
+     st.plotly_chart(fig)
+
