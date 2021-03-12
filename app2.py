@@ -20,7 +20,12 @@ st.image(image,use_column_width=True)
 
 
 st.header("""User Guide """)
-st.write("")
+st.write("1.Filter your interested sectors of companies")
+st.write("2.Enter a Ticker")
+st.write("3.Enter a Start Date and End Date ")
+st.write("4.Choose Indicator")
+st.write("5.Check the boxes if you want to know more about the Stock")
+st.write("6.Follow the instruction of the indicators to Interpret the Indicator")
 #create a sidebar header
 st.sidebar.header('User Input Parameter')
 
