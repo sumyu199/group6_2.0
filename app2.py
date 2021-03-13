@@ -616,7 +616,7 @@ for i in indicators:
 
  if i =='Bollinger Bands with RSI':
      st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price']))
- if i == 'MACD':
+ elif i == 'MACD':
      st.dataframe(tech_df.style.applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']))
- if i == 'OBV':
+ elif i == 'OBV':
      st.dataframe(tech_df.style.applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
