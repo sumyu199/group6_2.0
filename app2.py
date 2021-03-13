@@ -598,4 +598,8 @@ for i in indicators:
      tech_df['OBV_Buy_Signal_Price'] = OBV_df['OBV_Buy_Signal_Price']
      tech_df['OBV_Sell_Signal_Price'] = OBV_df['OBV_Sell_Signal_Price']
 
+
+st.header('Technical Analysis Indications')
+tech_df = tech_df.dropna(thresh=2)
+tech_df.index = range(len(tech_df))
 st.dataframe(tech_df)
