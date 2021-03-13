@@ -461,6 +461,7 @@ for i in indicators:
      macd_df['MACD_Buy_Signal_Price'] = data['MACD_Buy_Signal_Price']
      macd_df['MACD_Sell_Signal_Price'] = data['MACD_Sell_Signal_Price']
      macd_df = macd_df.dropna(thresh=2)
+     macd_df.index = range(len(macd_df))
      st.dataframe(macd_df)
 
 #on-balance volume
