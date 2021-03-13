@@ -220,6 +220,7 @@ def profit(data,buy_col,sell_col):
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 for i in indicators:
  tech_df = []
+ tech_df.index = range(len(bb_df))
  tech_df['Date'] = data['Date']
  if i =='Bollinger Bands with RSI':
      # bollinger bands
@@ -596,5 +597,5 @@ for i in indicators:
      st.dataframe(OBV_df)
      tech_df['OBV_Buy_Signal_Price'] = OBV_df['OBV_Buy_Signal_Price']
      tech_df['OBV_Sell_Signal_Price'] = OBV_df['OBV_Sell_Signal_Price']
-     
+
  st.dataframe(tech_df)
