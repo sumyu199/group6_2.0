@@ -363,13 +363,14 @@ for i in indicators:
 
      bb_df['rsi_over_70'] = rsi_over_70
      bb_df['rsi_below_30'] = rsi_below_30
-     bb_df = bb_df.dropna(thresh=2)
-     bb_df.index = range(len(bb_df))
-     st.dataframe(bb_df)
      tech_df['BB_Buy_Signal_Price'] = bb_df['BB_Buy_Signal_Price']
      tech_df['BB_Sell_Signal_Price'] = bb_df['BB_Sell_Signal_Price']
      tech_df['rsi_over_70'] =  bb_df['rsi_over_70']
      tech_df['rsi_below_30'] = bb_df['rsi_below_30']
+     bb_df = bb_df.dropna(thresh=2)
+     bb_df.index = range(len(bb_df))
+     st.dataframe(bb_df)
+
 
 
 
@@ -486,11 +487,12 @@ for i in indicators:
      macd_df['Date'] = data['Date']
      macd_df['MACD_Buy_Signal_Price'] = data['MACD_Buy_Signal_Price']
      macd_df['MACD_Sell_Signal_Price'] = data['MACD_Sell_Signal_Price']
+     tech_df['MACD_Buy_Signal_Price'] =  macd_df['MACD_Buy_Signal_Price']
+     tech_df['MACD_Sell_Signal_Price'] = macd_df['MACD_Sell_Signal_Price']
      macd_df = macd_df.dropna(thresh=2)
      macd_df.index = range(len(macd_df))
      st.dataframe(macd_df)
-     tech_df['MACD_Buy_Signal_Price'] =  macd_df['MACD_Buy_Signal_Price']
-     tech_df['MACD_Sell_Signal_Price'] = macd_df['MACD_Sell_Signal_Price']
+
 #on-balance volume
  if i == 'OBV':
      OBV = []
@@ -592,14 +594,15 @@ for i in indicators:
      OBV_df['Date'] = data['Date']
      OBV_df['OBV_Buy_Signal_Price'] = data['OBV_Buy_Signal_Price']
      OBV_df['OBV_Sell_Signal_Price'] = data['OBV_Sell_Signal_Price']
+     tech_df['OBV_Buy_Signal_Price'] = OBV_df['OBV_Buy_Signal_Price']
+     tech_df['OBV_Sell_Signal_Price'] = OBV_df['OBV_Sell_Signal_Price']
      OBV_df = OBV_df.dropna(thresh=2)
      OBV_df.index = range(len(OBV_df))
      st.dataframe(OBV_df)
-     tech_df['OBV_Buy_Signal_Price'] = OBV_df['OBV_Buy_Signal_Price']
-     tech_df['OBV_Sell_Signal_Price'] = OBV_df['OBV_Sell_Signal_Price']
+
 
 
 st.header('Technical Analysis Indications')
-
+tech_df = tech_df.dropna(thresh=2)
 tech_df.index = range(len(tech_df))
 st.dataframe(tech_df)
