@@ -458,9 +458,9 @@ for i in indicators:
      st.header('Technical Analysis Indications')
      macd_df = pd.DataFrame()
      macd_df['Date'] = data['Date']
-     macd_df['Buy_Price'] = data['MACD_Buy_Signal_Price']
-     macd_df['Sell_Price'] = data['MACD_Sell_Signal_Price']
-     bb = bb.dropna(thresh=2)
+     macd_df['MACD_Buy_Signal_Price'] = data['MACD_Buy_Signal_Price']
+     macd_df['MACD_Sell_Signal_Price'] = data['MACD_Sell_Signal_Price']
+     macd_df = macd_df.dropna(thresh=2)
      st.dataframe(macd_df)
 
 #on-balance volume
