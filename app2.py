@@ -227,6 +227,7 @@ def red(val):
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 tech_df = pd.DataFrame()
 tech_df['Date'] = data['Date']
+profit = []
 for i in indicators:
 
  if i =='Bollinger Bands with RSI':
@@ -326,6 +327,7 @@ for i in indicators:
          xaxis_title="Date")
      st.header(f"Bollinger Bands Signal\n {company_name}")
      profit_B = profit(data,'BB_Buy_Signal_Price','BB_Sell_Signal_Price')
+     profit.append(profit_B)
      st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
      st.write("If price close outside of the upper Bollinger Band,Then we are going to look place a **SELL TRADE**.")
      st.write("If price close outside of the lower Bollinger Band,Then we are going to look place a **BUY TRADE**.")
@@ -482,6 +484,7 @@ for i in indicators:
       height=600)
      st.header(f"MACD Signal\n {company_name}")
      profit_M = profit(data,'MACD_Buy_Signal_Price','MACD_Sell_Signal_Price')
+     profit.append(profit_M)
      st.write(f"Profit of {company_name} based on MACD is ${profit_M}")
      st.write("If MACD is **above signal line with bullish signal**,Then we are going to look place a **BUY TRADE**. ")
      st.write("If MACD is **below signal line with bearish signal**,Then we are going to look place a **SELL TRADE**. ")
@@ -590,6 +593,7 @@ for i in indicators:
          height=600)
      st.header(f"OBV Signal\n {company_name}")
      profit_O = profit(data,'OBV_Buy_Signal_Price','OBV_Sell_Signal_Price')
+     profit.append(profit_O)
      st.write(f"Profit of {company_name} based on OBV is ${profit_O}")
      st.write('If **OBV > OBV_EMA**,Then we are going to look place a **BUY TRADE**.')
      st.write('If **OBV < OBV_EMA**,Then we are going to look place a **SELL TRADE**.')
@@ -637,3 +641,4 @@ elif  'BB_Buy_Signal_Price' and 'OBV_Buy_Signal_Price' and 'MACD_Buy_Signal_Pric
      st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price'])
                   .applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']).
                   applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
+st.write(f"Maximum Profit of {company_name} based on the selected indicators is ${max(profit)}")
