@@ -605,4 +605,9 @@ for i in indicators:
 st.header('Technical Analysis Indications')
 tech_df = tech_df.dropna(thresh=2)
 tech_df.index = range(len(tech_df))
+def color(val):
+    if val > 0 :
+        color = 'green'
+    return 'background-color: %s' % color
+tech_df.style.applymap(color, subset=['OBV_Buy_Signal_Price'])
 st.dataframe(tech_df)
