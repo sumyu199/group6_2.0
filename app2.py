@@ -219,9 +219,10 @@ def profit(data,buy_col,sell_col):
 
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 for i in indicators:
- tech_df = []
- tech_df.index = range(len(data['Date']))
+
+ tech_df = pd.DataFrame()
  tech_df['Date'] = data['Date']
+
  if i =='Bollinger Bands with RSI':
      # bollinger bands
      data['middle band'] = SMA(data, period=20, column='Close')
