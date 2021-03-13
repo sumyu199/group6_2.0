@@ -600,6 +600,6 @@ for i in indicators:
 
 
 st.header('Technical Analysis Indications')
-tech_df = tech_df.dropna(thresh=2)
+
 tech_df.index = range(len(tech_df))
 st.dataframe(tech_df)
