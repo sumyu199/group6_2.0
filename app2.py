@@ -291,7 +291,7 @@ for i in indicators:
                               name='Close Price',
                               line=dict(
                                   color='LightSkyBlue')))
-     if st.checkbox('Show the upper band and lower band'):
+     if st.checkbox('Show the upper band and lower band with Bollinger Bands Signal'):
         fig.add_trace(go.Scatter(x= data['Date'], y=data['upper band'],
                     mode='lines',
                     name='upper band',
