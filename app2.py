@@ -498,7 +498,7 @@ for i in indicators:
      tech_df['MACD_Sell_Signal_Price'] = macd_df['MACD_Sell_Signal_Price']
      macd_df = macd_df.dropna(thresh=2)
      macd_df.index = range(len(macd_df))
-     st.dataframe(macd_df.style.applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(green, subset=['MACD_Sell_Signal_Price']))
+     st.dataframe(macd_df.style.applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']))
 
 #on-balance volume
  if i == 'OBV':
@@ -605,7 +605,7 @@ for i in indicators:
      tech_df['OBV_Sell_Signal_Price'] = OBV_df['OBV_Sell_Signal_Price']
      OBV_df = OBV_df.dropna(thresh=2)
      OBV_df.index = range(len(OBV_df))
-     st.dataframe(OBV_df.style.applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(green, subset=['OBV_Sell_Signal_Price']))
+     st.dataframe(OBV_df.style.applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
 
 
 
