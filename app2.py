@@ -612,7 +612,7 @@ for i in indicators:
 st.header('Technical Analysis Indications')
 tech_df = tech_df.dropna(thresh=2)
 tech_df.index = range(len(tech_df))
-singal = ['BB_Buy_Signal_Price','MACD_Buy_Signal_Price','BB_Buy_Signal_Price']
+
 if 'BB_Buy_Signal_Price' in tech_df.columns and not 'MACD_Buy_Signal_Price' in tech_df.columns and not 'OBV_Buy_Signal_Price' in tech_df.columns:
     st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price']))
 
@@ -634,7 +634,7 @@ elif 'MACD_Buy_Signal_Price' and 'OBV_Buy_Signal_Price' in tech_df.columns and n
     st.dataframe(tech_df.style.applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']).
                   applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
 
-elif all(singal) in tech_df.columns:
+elif  'BB_Buy_Signal_Price' and 'OBV_Buy_Signal_Price' and 'MACD_Buy_Signal_Price' in tech_df.columns:
      st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price'])
                   .applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']).
                   applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
