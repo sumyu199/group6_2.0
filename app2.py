@@ -622,19 +622,19 @@ elif 'MACD_Buy_Signal_Price' in tech_df.columns and not 'BB_Buy_Signal_Price' in
 elif 'OBV_Buy_Signal_Price' in tech_df.columns and not 'BB_Buy_Signal_Price' in tech_df.columns and not 'MACD_Buy_Signal_Price' in tech_df.columns :
     st.dataframe(tech_df.style.applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
 
-elif 'BB_Buy_Signal_Price' and 'MACD_Buy_Signal_Price' in tech_df.columns and not all(singal) in tech_df.columns:
+elif 'BB_Buy_Signal_Price' and 'MACD_Buy_Signal_Price' in tech_df.columns and not 'OBV_Buy_Signal_Price' in tech_df.columns:
     st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price'])
         .applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']))
 
-elif 'BB_Buy_Signal_Price' and 'OBV_Buy_Signal_Price' in tech_df.columns and not all(singal) in tech_df.columns:
+elif 'BB_Buy_Signal_Price' and 'OBV_Buy_Signal_Price' in tech_df.columns and not 'MACD_Buy_Signal_Price' in tech_df.columns:
     st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price']).
                  applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
 
-elif 'MACD_Buy_Signal_Price' and 'OBV_Buy_Signal_Price' in tech_df.columns and not all(singal) in tech_df.columns:
+elif 'MACD_Buy_Signal_Price' and 'OBV_Buy_Signal_Price' in tech_df.columns and not 'BB_Buy_Signal_Price' in tech_df.columns:
     st.dataframe(tech_df.style.applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']).
                   applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
 
-if all(singal) in tech_df.columns:
+elif all(singal) in tech_df.columns:
      st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price'])
                   .applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']).
                   applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
