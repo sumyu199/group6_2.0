@@ -356,10 +356,10 @@ for i in indicators:
      rsi_over_70 = []
      rsi_below_30 = []
      for i in range(0, len(data['RSI_SMA'])):
-         if data['RSI_SMA'][i] > 70:
+         if round(data['RSI_SMA'][i],0) >= 70:
              rsi_over_70.append((data['RSI_SMA'])[i])
              rsi_below_30.append(np.nan)
-         elif data['RSI_SMA'][i] < 30:
+         elif round(data['RSI_SMA'][i],0) <= 30:
              rsi_below_30.append((data['RSI_SMA'])[i])
              rsi_over_70.append(np.nan)
          else:
