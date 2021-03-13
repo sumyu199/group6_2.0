@@ -342,7 +342,28 @@ for i in indicators:
      st.plotly_chart(fig)
 
      st.header('Technical Analysis Indications')
+     bb_df = pd.DataFrame()
+     bb_df['Date'] = data['Date']
+     bb_df['Buy_Price'] = data['BB_Buy_Signal_Price']
+     bb_df['Sell_Price'] = data['BB_Sell_Signal_Price']
+     rsi_over_70 = []
+     rsi_below_30 = []
+     for i in range(0, len(data['RSI_SMA'])):
+         if data['RSI_SMA'][i] > 70:
+             rsi_over_70.append((data['RSI_SMA'])[i])
+             rsi_below_30.append(np.nan)
+         elif data['RSI_SMA'][i] < 30:
+             rsi_below_30.append((data['RSI_SMA'])[i])
+             rsi_over_70.append(np.nan)
+         else:
+             rsi_over_70.append(np.nan)
+             rsi_below_30.append(np.nan)
 
+     bb_df['rsi_over_70'] = rsi_over_70
+     bb_df['rsi_below_30'] = rsi_below_30
+     bb = bb.dropna(thresh=2)
+     bb_df.index = range(len(bb_df))
+     st.dataframe(bb_df)
 
 
 
