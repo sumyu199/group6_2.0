@@ -567,4 +567,4 @@ for i in indicators:
      OBV_df['OBV_Sell_Signal_Price'] = data['OBV_Sell_Signal_Price']
      OBV_df = macd_df.dropna(thresh=2)
      OBV_df.index = range(len(OBV_df))
-     st.dataframe(macd_df)
+     st.dataframe(OBV_df)
