@@ -606,6 +606,6 @@ st.header('Technical Analysis Indications')
 tech_df = tech_df.dropna(thresh=2)
 tech_df.index = range(len(tech_df))
 def color_obv(val):
-    color = 'green' if val else 'red'
+    color = 'green' if val > 0 else 'white'
     return f'background-color: {color}'
 st.dataframe(tech_df.style.applymap(color_obv, subset=['OBV_Buy_Signal_Price']))
