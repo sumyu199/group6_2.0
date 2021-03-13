@@ -346,8 +346,6 @@ for i in indicators:
      st.header('Technical Analysis Indications')
      bb_df = pd.DataFrame()
      bb_df['Date'] = data['Date']
-     bb_df['BB_Buy_Signal_Price'] = data['BB_Buy_Signal_Price']
-     bb_df['BB_Sell_Signal_Price'] = data['BB_Sell_Signal_Price']
      rsi_over_70 = []
      rsi_below_30 = []
      for i in range(0, len(data['RSI_SMA'])):
@@ -360,12 +358,14 @@ for i in indicators:
          else:
              rsi_over_70.append(np.nan)
              rsi_below_30.append(np.nan)
-
+     bb_df['BB_Sell_Signal_Price'] = data['BB_Sell_Signal_Price']
      bb_df['rsi_over_70'] = rsi_over_70
+     bb_df['BB_Buy_Signal_Price'] = data['BB_Buy_Signal_Price']
      bb_df['rsi_below_30'] = rsi_below_30
-     tech_df['BB_Buy_Signal_Price'] = bb_df['BB_Buy_Signal_Price']
+
      tech_df['BB_Sell_Signal_Price'] = bb_df['BB_Sell_Signal_Price']
      tech_df['rsi_over_70'] =  bb_df['rsi_over_70']
+     tech_df['BB_Buy_Signal_Price'] = bb_df['BB_Buy_Signal_Price']
      tech_df['rsi_below_30'] = bb_df['rsi_below_30']
      bb_df = bb_df.dropna(thresh=2)
      bb_df.index = range(len(bb_df))
