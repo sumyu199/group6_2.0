@@ -219,7 +219,8 @@ def profit(data,buy_col,sell_col):
 
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 for i in indicators:
-
+ tech_df = []
+ tech_df['Date'] = data['Date']
  if i =='Bollinger Bands with RSI':
      # bollinger bands
      data['middle band'] = SMA(data, period=20, column='Close')
@@ -344,8 +345,8 @@ for i in indicators:
      st.header('Technical Analysis Indications')
      bb_df = pd.DataFrame()
      bb_df['Date'] = data['Date']
-     bb_df['Buy_Price'] = data['BB_Buy_Signal_Price']
-     bb_df['Sell_Price'] = data['BB_Sell_Signal_Price']
+     bb_df['BB_Buy_Signal_Price'] = data['BB_Buy_Signal_Price']
+     bb_df['BB_Sell_Signal_Price'] = data['BB_Sell_Signal_Price']
      rsi_over_70 = []
      rsi_below_30 = []
      for i in range(0, len(data['RSI_SMA'])):
@@ -364,7 +365,10 @@ for i in indicators:
      bb_df = bb_df.dropna(thresh=2)
      bb_df.index = range(len(bb_df))
      st.dataframe(bb_df)
-
+     tech_df['BB_Buy_Signal_Price'] = bb_df['BB_Buy_Signal_Price']
+     tech_df['BB_Sell_Signal_Price'] = bb_df['BB_Sell_Signal_Price']
+     tech_df['rsi_over_70'] =  bb_df['rsi_over_70']
+     tech_df['rsi_below_30'] = bb_df['rsi_below_30']
 
 
 
@@ -484,7 +488,8 @@ for i in indicators:
      macd_df = macd_df.dropna(thresh=2)
      macd_df.index = range(len(macd_df))
      st.dataframe(macd_df)
-
+     tech_df['MACD_Buy_Signal_Price'] =  macd_df['MACD_Buy_Signal_Price']
+     tech_df['MACD_Sell_Signal_Price'] = macd_df['MACD_Sell_Signal_Price']
 #on-balance volume
  if i == 'OBV':
      OBV = []
@@ -589,3 +594,7 @@ for i in indicators:
      OBV_df = OBV_df.dropna(thresh=2)
      OBV_df.index = range(len(OBV_df))
      st.dataframe(OBV_df)
+     tech_df['OBV_Buy_Signal_Price'] = OBV_df['OBV_Buy_Signal_Price']
+     tech_df['OBV_Sell_Signal_Price'] = OBV_df['OBV_Sell_Signal_Price']
+     
+ st.dataframe(tech_df)
