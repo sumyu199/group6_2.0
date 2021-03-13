@@ -634,7 +634,7 @@ elif 'MACD_Buy_Signal_Price' and 'OBV_Buy_Signal_Price' in tech_df.columns and n
     st.dataframe(tech_df.style.applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']).
                   applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
 
-if all(singal) in tech_df.columns and not all(singal) in tech_df.columns:
+if all(singal) in tech_df.columns:
      st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price'])
                   .applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=['MACD_Sell_Signal_Price']).
                   applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=['OBV_Sell_Signal_Price']))
