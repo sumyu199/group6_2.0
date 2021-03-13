@@ -369,11 +369,10 @@ for i in indicators:
      bb_df['rsi_over_70'] = rsi_over_70
      bb_df['BB_Buy_Signal_Price'] = data['BB_Buy_Signal_Price']
      bb_df['rsi_below_30'] = rsi_below_30
-
-     tech_df['BB_Sell_Signal_Price'] = bb_df['BB_Sell_Signal_Price']
-     tech_df['rsi_over_70'] =  bb_df['rsi_over_70']
      tech_df['BB_Buy_Signal_Price'] = bb_df['BB_Buy_Signal_Price']
      tech_df['rsi_below_30'] = bb_df['rsi_below_30']
+     tech_df['BB_Sell_Signal_Price'] = bb_df['BB_Sell_Signal_Price']
+     tech_df['rsi_over_70'] =  bb_df['rsi_over_70']
      bb_df = bb_df.dropna(thresh=2)
      bb_df.index = range(len(bb_df))
      st.dataframe(bb_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=['BB_Sell_Signal_Price']))
