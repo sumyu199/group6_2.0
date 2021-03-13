@@ -217,6 +217,11 @@ def profit(data,buy_col,sell_col):
     return profit
 
 
+def color_obv(val1, val2):
+    color1 = 'limegreen' if val1 > 0 else 'white'
+    color2 = 'lightcoral' if val2 > 0 else 'white'
+    return f'background-color: {color1, color2}'
+
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 tech_df = pd.DataFrame()
 tech_df['Date'] = data['Date']
@@ -369,7 +374,7 @@ for i in indicators:
      tech_df['rsi_below_30'] = bb_df['rsi_below_30']
      bb_df = bb_df.dropna(thresh=2)
      bb_df.index = range(len(bb_df))
-     st.dataframe(bb_df)
+     st.dataframe(bb_df.style.applymap(color_obv, subset=['BB_Buy_Signal_Price','BB_Sell_Signal_Price']))
 
 
 
@@ -491,7 +496,7 @@ for i in indicators:
      tech_df['MACD_Sell_Signal_Price'] = macd_df['MACD_Sell_Signal_Price']
      macd_df = macd_df.dropna(thresh=2)
      macd_df.index = range(len(macd_df))
-     st.dataframe(macd_df)
+     st.dataframe(macd_df.style.applymap(color_obv, subset=['MACD_Buy_Signal_Price','MACD_Sell_Signal_Price']))
 
 #on-balance volume
  if i == 'OBV':
@@ -598,14 +603,11 @@ for i in indicators:
      tech_df['OBV_Sell_Signal_Price'] = OBV_df['OBV_Sell_Signal_Price']
      OBV_df = OBV_df.dropna(thresh=2)
      OBV_df.index = range(len(OBV_df))
-     st.dataframe(OBV_df)
+     st.dataframe(OBV_df.style.applymap(color_obv, subset=['OBV_Buy_Signal_Price','OBV_Sell_Signal_Price']))
 
 
 
 st.header('Technical Analysis Indications')
 tech_df = tech_df.dropna(thresh=2)
 tech_df.index = range(len(tech_df))
-def color_obv(val):
-    color = 'limegreen' if val > 0 else 'white'
-    return f'background-color: {color}'
-st.dataframe(tech_df.style.applymap(color_obv, subset=['OBV_Buy_Signal_Price']))
+st.dataframe(tech_df)
