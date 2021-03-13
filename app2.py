@@ -237,8 +237,8 @@ for i in indicators:
          data['up'] = up
          data['down'] = down
          # Calculate the average gain and the average loss(SMA)
-         AVG_Loss = SMA(data, period, column='up')
-         AVG_Gain = abs(SMA(data, period, column='down'))
+         AVG_Gain = SMA(data, period, column='up')
+         AVG_Loss = abs(SMA(data, period, column='down'))
          data['AVG_Gain'] = SMA(data, period, column='up')
          data['AVG_Loss'] = abs(SMA(data, period, column='down'))
          RS_SMA = AVG_Gain / AVG_Loss
