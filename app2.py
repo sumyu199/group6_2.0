@@ -187,7 +187,7 @@ if st.checkbox('Show the Lowest Price'):
    st.header(f"Low Price\n {company_name}")
    st.plotly_chart(fig)
 
-st.header('Indicator Result')
+st.header('Visual Analysis of Technical Indicators')
 indicators = [indicator_selection1,indicator_selection2,indicator_selection3]
 #Simple Moving Average
 def SMA(data,period = 20, column = 'Close'):
@@ -341,6 +341,10 @@ for i in indicators:
      st.write("If looking to Buy,Wait for **RSI < 30** Before entering")
      st.plotly_chart(fig)
 
+     st.header('Technical Analysis Indications')
+
+
+
 
 
 
@@ -451,6 +455,13 @@ for i in indicators:
      st.plotly_chart(fig)
 
 
+     st.header('Technical Analysis Indications')
+     macd_df = pd.DataFrame()
+     macd_df['Date'] = data['Date']
+     macd_df['Buy_Price'] = data['MACD_Buy_Signal_Price']
+     macd_df['Sell_Price'] = data['MACD_Sell_Signal_Price']
+     bb = bb.dropna(thresh=2)
+     st.dataframe(macd_df)
 
 #on-balance volume
  if i == 'OBV':
