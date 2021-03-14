@@ -265,132 +265,135 @@ try:
                 data['RSI_SMA'] = RSI_SMA
                 return data
 
+            try:
+                RSI(data, period=14, column='Close')
 
-            RSI(data, period=14, column='Close')
+
+                # buy sell signal of BB
+                def buy_sell(data, close, upper_band, lower_band):
+                    Buysignal = []
+                    Sellsignal = []
+                    flag = -1
+                    for i in range(0, len(data)):
+                        if data[close][i] > data[upper_band][i] and flag != 0:
+                            Sellsignal.append(data[close][i])
+                            Buysignal.append(np.nan)
+                            flag = 0
+                        elif data[close][i] < data[lower_band][i] and flag != 1:
+                            Buysignal.append(data[close][i])
+                            Sellsignal.append(np.nan)
+                            flag = 1
+                        else:
+                            Buysignal.append(np.nan)
+                            Sellsignal.append(np.nan)
+                    return (Buysignal, Sellsignal)
 
 
-            # buy sell signal of BB
-            def buy_sell(data, close, upper_band, lower_band):
-                Buysignal = []
-                Sellsignal = []
-                flag = -1
-                for i in range(0, len(data)):
-                    if data[close][i] > data[upper_band][i] and flag != 0:
-                        Sellsignal.append(data[close][i])
-                        Buysignal.append(np.nan)
-                        flag = 0
-                    elif data[close][i] < data[lower_band][i] and flag != 1:
-                        Buysignal.append(data[close][i])
-                        Sellsignal.append(np.nan)
-                        flag = 1
+                b = buy_sell(data, 'Close', 'upper band', 'lower band')
+
+                data['BB_Buy_Signal_Price'] = b[0]
+                data['BB_Sell_Signal_Price'] = b[1]
+
+                # visualising
+                fig = go.Figure()
+
+                # Add traces
+                fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'],
+                                         mode='lines',
+                                         name='Close Price',
+                                         line=dict(
+                                             color='LightSkyBlue')))
+                if st.checkbox('Show the upper band and lower band with Bollinger Bands Signal'):
+                    fig.add_trace(go.Scatter(x=data['Date'], y=data['upper band'],
+                                             mode='lines',
+                                             name='upper band',
+                                             line=dict(
+                                                 color='DarkOrange')))
+                    fig.add_trace(go.Scatter(x=data['Date'], y=data['lower band'],
+                                             mode='lines',
+                                             name='lower band',
+                                             line=dict(
+                                                 color='IndianRed')))
+                fig.add_trace(go.Scatter(x=data['Date'], y=data['BB_Buy_Signal_Price'],
+                                         mode='markers',
+                                         marker_symbol='triangle-up',
+                                         name='Buy',
+                                         marker=dict(
+                                             size=10,
+                                             color='green',
+                                             opacity=1)))
+                fig.add_trace(go.Scatter(x=data['Date'], y=data['BB_Sell_Signal_Price'],
+                                         mode='markers',
+                                         marker_symbol='triangle-down',
+                                         name='Sell',
+                                         marker=dict(
+                                             size=10,
+                                             color='red',
+                                             opacity=1)))
+
+                fig.update_layout(
+                    autosize=False,
+                    width=800,
+                    height=600,
+                    xaxis_title="Date")
+                st.header(f"Bollinger Bands Signal\n {company_name}")
+                profit_B = profit(data, 'BB_Buy_Signal_Price', 'BB_Sell_Signal_Price')
+                st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
+                st.write(
+                    "If price close outside of the upper Bollinger Band,Then we are going to look place a **SELL TRADE**.")
+                st.write(
+                    "If price close outside of the lower Bollinger Band,Then we are going to look place a **BUY TRADE**.")
+                st.plotly_chart(fig)
+
+                # visualising
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=data["Date"], y=data['RSI_SMA'],
+                                         mode='lines',
+                                         name='RSI_SMA',
+                                         line=dict(color='Blue')))
+                fig.update_layout(
+                    autosize=False,
+                    width=800,
+                    height=600)
+                fig.add_hline(y=70, line_dash="dot", annotation_text="70 RSI",
+                              annotation_position="bottom right")
+                fig.add_hline(y=30, line_dash="dot", annotation_text="30 RSI",
+                              annotation_position="bottom right")
+                st.header(f"Relative Strength Index\n {company_name}")
+                st.write("If looking to sell,wait for **RSI > 70** Before entering")
+                st.write("If looking to Buy,Wait for **RSI < 30** Before entering")
+                st.plotly_chart(fig)
+
+                st.header('Technical Analysis Indications')
+                bb_df = pd.DataFrame()
+                bb_df['Date'] = data['Date']
+                rsi_over_70 = []
+                rsi_below_30 = []
+                for i in range(0, len(data['RSI_SMA'])):
+                    if data['RSI_SMA'][i] >= 70:
+                        rsi_over_70.append((data['RSI_SMA'])[i])
+                        rsi_below_30.append(np.nan)
+                    elif data['RSI_SMA'][i] <= 30:
+                        rsi_below_30.append((data['RSI_SMA'])[i])
+                        rsi_over_70.append(np.nan)
                     else:
-                        Buysignal.append(np.nan)
-                        Sellsignal.append(np.nan)
-                return (Buysignal, Sellsignal)
+                        rsi_over_70.append(np.nan)
+                        rsi_below_30.append(np.nan)
+                bb_df['BB_Sell_Signal_Price'] = data['BB_Sell_Signal_Price']
+                bb_df['rsi_over_70'] = rsi_over_70
+                bb_df['BB_Buy_Signal_Price'] = data['BB_Buy_Signal_Price']
+                bb_df['rsi_below_30'] = rsi_below_30
+                tech_df['BB_Buy_Signal_Price'] = bb_df['BB_Buy_Signal_Price']
+                tech_df['rsi_below_30'] = bb_df['rsi_below_30']
+                tech_df['BB_Sell_Signal_Price'] = bb_df['BB_Sell_Signal_Price']
+                tech_df['rsi_over_70'] = bb_df['rsi_over_70']
+                bb_df = bb_df.dropna(thresh=2)
+                bb_df.index = range(len(bb_df))
+                st.dataframe(bb_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=[
+                    'BB_Sell_Signal_Price']))
+            except ValueError:
+                st.error("Note If analysing Commodities with Bollinger Bands then the 'End Date' cannot be today ")
 
-
-            b = buy_sell(data, 'Close', 'upper band', 'lower band')
-
-            data['BB_Buy_Signal_Price'] = b[0]
-            data['BB_Sell_Signal_Price'] = b[1]
-
-            # visualising
-            fig = go.Figure()
-
-            # Add traces
-            fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'],
-                                     mode='lines',
-                                     name='Close Price',
-                                     line=dict(
-                                         color='LightSkyBlue')))
-            if st.checkbox('Show the upper band and lower band with Bollinger Bands Signal'):
-                fig.add_trace(go.Scatter(x=data['Date'], y=data['upper band'],
-                                         mode='lines',
-                                         name='upper band',
-                                         line=dict(
-                                             color='DarkOrange')))
-                fig.add_trace(go.Scatter(x=data['Date'], y=data['lower band'],
-                                         mode='lines',
-                                         name='lower band',
-                                         line=dict(
-                                             color='IndianRed')))
-            fig.add_trace(go.Scatter(x=data['Date'], y=data['BB_Buy_Signal_Price'],
-                                     mode='markers',
-                                     marker_symbol='triangle-up',
-                                     name='Buy',
-                                     marker=dict(
-                                         size=10,
-                                         color='green',
-                                         opacity=1)))
-            fig.add_trace(go.Scatter(x=data['Date'], y=data['BB_Sell_Signal_Price'],
-                                     mode='markers',
-                                     marker_symbol='triangle-down',
-                                     name='Sell',
-                                     marker=dict(
-                                         size=10,
-                                         color='red',
-                                         opacity=1)))
-
-            fig.update_layout(
-                autosize=False,
-                width=800,
-                height=600,
-                xaxis_title="Date")
-            st.header(f"Bollinger Bands Signal\n {company_name}")
-            profit_B = profit(data, 'BB_Buy_Signal_Price', 'BB_Sell_Signal_Price')
-            st.write(f"Profit of {company_name} based on Bollinger Band is ${profit_B}")
-            st.write(
-                "If price close outside of the upper Bollinger Band,Then we are going to look place a **SELL TRADE**.")
-            st.write(
-                "If price close outside of the lower Bollinger Band,Then we are going to look place a **BUY TRADE**.")
-            st.plotly_chart(fig)
-
-            # visualising
-            fig = go.Figure()
-            fig.add_trace(go.Scatter(x=data["Date"], y=data['RSI_SMA'],
-                                     mode='lines',
-                                     name='RSI_SMA',
-                                     line=dict(color='Blue')))
-            fig.update_layout(
-                autosize=False,
-                width=800,
-                height=600)
-            fig.add_hline(y=70, line_dash="dot", annotation_text="70 RSI",
-                          annotation_position="bottom right")
-            fig.add_hline(y=30, line_dash="dot", annotation_text="30 RSI",
-                          annotation_position="bottom right")
-            st.header(f"Relative Strength Index\n {company_name}")
-            st.write("If looking to sell,wait for **RSI > 70** Before entering")
-            st.write("If looking to Buy,Wait for **RSI < 30** Before entering")
-            st.plotly_chart(fig)
-
-            st.header('Technical Analysis Indications')
-            bb_df = pd.DataFrame()
-            bb_df['Date'] = data['Date']
-            rsi_over_70 = []
-            rsi_below_30 = []
-            for i in range(0, len(data['RSI_SMA'])):
-                if data['RSI_SMA'][i] >= 70:
-                    rsi_over_70.append((data['RSI_SMA'])[i])
-                    rsi_below_30.append(np.nan)
-                elif data['RSI_SMA'][i] <= 30:
-                    rsi_below_30.append((data['RSI_SMA'])[i])
-                    rsi_over_70.append(np.nan)
-                else:
-                    rsi_over_70.append(np.nan)
-                    rsi_below_30.append(np.nan)
-            bb_df['BB_Sell_Signal_Price'] = data['BB_Sell_Signal_Price']
-            bb_df['rsi_over_70'] = rsi_over_70
-            bb_df['BB_Buy_Signal_Price'] = data['BB_Buy_Signal_Price']
-            bb_df['rsi_below_30'] = rsi_below_30
-            tech_df['BB_Buy_Signal_Price'] = bb_df['BB_Buy_Signal_Price']
-            tech_df['rsi_below_30'] = bb_df['rsi_below_30']
-            tech_df['BB_Sell_Signal_Price'] = bb_df['BB_Sell_Signal_Price']
-            tech_df['rsi_over_70'] = bb_df['rsi_over_70']
-            bb_df = bb_df.dropna(thresh=2)
-            bb_df.index = range(len(bb_df))
-            st.dataframe(bb_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=[
-                'BB_Sell_Signal_Price']))
 
 
 
