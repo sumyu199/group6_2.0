@@ -10,7 +10,7 @@ from plotly.subplots import make_subplots
 import datetime
 from pandas_datareader._utils import RemoteDataError
 
-st.title('Stock Market Web Application')
+st.title('Technical Analysis Application')
 
 st.markdown("""
 **Visually** show data on a stock!
@@ -22,11 +22,11 @@ st.image(image,use_column_width=True)
 
 st.header("""User Guide """)
 st.write("1.Filter your interested sectors of companies")
-st.write("2.Enter a Ticker")
-st.write("3.Enter a Start Date and End Date ")
-st.write("4.Choose Indicator")
-st.write("5.Check the boxes if you want to know more about the Stock")
-st.write("6.Follow the instruction of the indicators to Interpret the Indicators")
+st.write("2.Enter a ticker")
+st.write("3.Enter a start date and end date ")
+st.write("4.Choose indicator")
+st.write("5.Check the boxes if you want to know more about the stock")
+st.write("6.Follow the instruction of the indicators to interpret the indicators")
 #create a sidebar header
 st.sidebar.header('User Input Parameter')
 
