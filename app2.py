@@ -624,8 +624,6 @@ try:
             tech_df['OBV_Sell_Signal_Price'] = OBV_df['OBV_Sell_Signal_Price']
             OBV_df = OBV_df.dropna(thresh=2)
             OBV_df.index = range(len(OBV_df))
-            st.dataframe(OBV_df.style.applymap(green, subset=['OBV_Buy_Signal_Price']).applymap(red, subset=[
-                'OBV_Sell_Signal_Price']))
 
     st.header('Technical Analysis Indications')
     tech_df = tech_df.dropna(thresh=2)
