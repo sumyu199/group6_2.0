@@ -389,8 +389,7 @@ try:
                 tech_df['rsi_over_70'] = bb_df['rsi_over_70']
                 bb_df = bb_df.dropna(thresh=2)
                 bb_df.index = range(len(bb_df))
-                st.dataframe(bb_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=[
-                    'BB_Sell_Signal_Price']))
+
             except ValueError:
                 st.error("Note If analysing Commodities with Bollinger Bands then the 'End Date' cannot be today ")
 
@@ -516,8 +515,7 @@ try:
             tech_df['MACD_Sell_Signal_Price'] = macd_df['MACD_Sell_Signal_Price']
             macd_df = macd_df.dropna(thresh=2)
             macd_df.index = range(len(macd_df))
-            st.dataframe(macd_df.style.applymap(green, subset=['MACD_Buy_Signal_Price']).applymap(red, subset=[
-                'MACD_Sell_Signal_Price']))
+
 
         # on-balance volume
         elif i == 'OBV':
