@@ -363,7 +363,7 @@ try:
                 st.write("If looking to Buy,Wait for **RSI < 30** Before entering")
                 st.plotly_chart(fig)
 
-                st.header('Technical Analysis Indications')
+
                 bb_df = pd.DataFrame()
                 bb_df['Date'] = data['Date']
                 rsi_over_70 = []
@@ -505,7 +505,7 @@ try:
                 "If MACD is **below signal line with bearish signal**,Then we are going to look place a **SELL TRADE**. ")
             st.plotly_chart(fig)
 
-            st.header('Technical Analysis Indications')
+
             macd_df = pd.DataFrame()
             macd_df['Date'] = data['Date']
             macd_df['MACD_Buy_Signal_Price'] = data['MACD_Buy_Signal_Price']
@@ -614,7 +614,7 @@ try:
             st.write('If **OBV < OBV_EMA**,Then we are going to look place a **SELL TRADE**.')
             st.plotly_chart(fig)
 
-            st.header('Technical Analysis Indications')
+
             OBV_df = pd.DataFrame()
             OBV_df['Date'] = data['Date']
             OBV_df['OBV_Buy_Signal_Price'] = data['OBV_Buy_Signal_Price']
@@ -625,7 +625,8 @@ try:
             OBV_df.index = range(len(OBV_df))
 
 
-    st.header('Comparing Technical Analysis Indications')
+    st.header('Comparing The Technical Analysis Indications')
+    st.write('Expand it to see result')
     tech_df = tech_df.dropna(thresh=2)
     tech_df.index = tech_df['Date']
 
