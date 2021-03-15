@@ -49,7 +49,6 @@ selected_sector = st.sidebar.multiselect('Sector', sorted_sector_unique, sorted_
 df_selected_sector = df[ (df['GICS Sector'].isin(selected_sector)) ]
 
 st.header('Companies in Selected Sector')
-st.write('Data Dimension: ' + str(df_selected_sector.shape[0]) + ' rows and ' + str(df_selected_sector.shape[1]) + ' columns.')
 st.dataframe(df_selected_sector)
 
 # Download S&P500 data
@@ -625,7 +624,8 @@ try:
             OBV_df = OBV_df.dropna(thresh=2)
             OBV_df.index = range(len(OBV_df))
 
-    st.header('Technical Analysis Indications')
+
+    st.header('Comparing Technical Analysis Indications')
     tech_df = tech_df.dropna(thresh=2)
     tech_df.index = tech_df['Date']
 
