@@ -30,7 +30,7 @@ st.write("6.Follow the instruction of the indicators to interpret the indicators
 #create a sidebar header
 st.sidebar.header('User Input Parameter')
 
-
+#function of loading the tickers information
 @st.cache
 def load_data():
     url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
@@ -38,6 +38,7 @@ def load_data():
     df = html[0]
     return df
 
+#store the loaded data and group the data by sector
 df = load_data()
 sector = df.groupby('GICS Sector')
 
@@ -61,21 +62,23 @@ def filedownload(df):
 
 st.markdown(filedownload(df_selected_sector), unsafe_allow_html=True)
 
+#read a forex csv file
 df2 = pd.read_csv('Forex.csv')
 st.header('Forex Symbol')
 st.write(df2)
 
+#read a commodities file
 df3 = pd.read_csv('commodities.csv')
 st.header('Commodities Symbol')
 st.write(df3)
 
-
+#function of user input features,create a data input area to get the user inputs
 today = datetime.date.today()
 def user_input_features():
     ticker = st.sidebar.text_input("Ticker","^HSI")
     start_date = st.sidebar.date_input('start date', datetime.date(2018,1,1))
     end_date = st.sidebar.date_input("End Date", today)
-    #information = st.sidebar.selectbox('Information',('Close','Volume','Canlestick'))
+    #indicator selection
     options = ['Select Indicator','Bollinger Bands with RSI','MACD', 'OBV']
     indicator_selection1 = st.sidebar.selectbox(
         label='Indicator 1',
@@ -90,9 +93,10 @@ def user_input_features():
          options = options)
 
     return ticker, start_date, end_date,indicator_selection1,indicator_selection2,indicator_selection3
-
+#store the results
 symbol, start, end , indicator_selection1,indicator_selection2,indicator_selection3 = user_input_features()
 
+#function of matching the yahoo finance stickers
 def get_symbol(symbol):
     url = "http://d.yimg.com/autoc.finance.yahoo.com/autoc?query={}&region=1&lang=en".format(symbol)
     result = requests.get(url).json()
@@ -110,7 +114,7 @@ try:
     data.to_csv('histdata.csv')
     data = pd.read_csv('histdata.csv')
     data = data.set_index(pd.DatetimeIndex(data['Date'].values))
-    # visualising
+    # visualising the candlestick with a checkbox
     if st.checkbox('Show Daily Candlestick Chart'):
         fig = go.Figure()
         fig.add_trace(
@@ -124,7 +128,7 @@ try:
         st.plotly_chart(fig)
 
     # Close Price
-    # visualising
+    # visualising the close price with checkbox
     if st.checkbox('Show Close Price'):
         fig = go.Figure()
         # Add traces
@@ -140,7 +144,7 @@ try:
         st.header(f"Adjusted Close Price\n {company_name}")
         st.plotly_chart(fig)
     # Volume
-    # visualising
+    # visualising the volume with checkbox
     if st.checkbox('Show the Volume'):
         fig = go.Figure()
         # Add traces
@@ -156,7 +160,7 @@ try:
         st.header(f"Volume\n {company_name}")
         st.plotly_chart(fig)
     # High
-    # visualising
+    # visualising the highest price with checkbox
     if st.checkbox('Show the Highest Price'):
         fig = go.Figure()
         # Add traces
@@ -171,7 +175,7 @@ try:
             height=600)
         st.header(f"High Price\n {company_name}")
         st.plotly_chart(fig)
-    # visualising
+    # visualising the lowest price with checkbox
     if st.checkbox('Show the Lowest Price'):
         fig = go.Figure()
         # Add traces
@@ -188,6 +192,7 @@ try:
         st.plotly_chart(fig)
 
     st.header('Visual Analysis of Technical Indicators')
+    # list of selected indicators
     indicators = [indicator_selection1, indicator_selection2, indicator_selection3]
 
 
@@ -218,18 +223,20 @@ try:
         profit = new_sell * 0.9997 - new_buy
         return profit
 
-
+    #green colour for later on map style on table
     def green(val):
         color = 'limegreen' if val > 0 else 'white'
         return f'background-color: {color}'
 
 
+    # red colour for later on map style on table
     def red(val):
         color = 'lightcoral' if val > 0 else 'white'
         return f'background-color: {color}'
 
 
-    indicators = [indicator_selection1, indicator_selection2, indicator_selection3]
+
+    #create technical analysis dataframe to store the indications
     tech_df = pd.DataFrame()
     tech_df['Date'] = data['Date']
 
@@ -354,6 +361,7 @@ try:
                     autosize=False,
                     width=800,
                     height=600)
+                # adding the rsi lines
                 fig.add_hline(y=70, line_dash="dot", annotation_text="70 RSI",
                               annotation_position="bottom right")
                 fig.add_hline(y=30, line_dash="dot", annotation_text="30 RSI",
@@ -368,6 +376,7 @@ try:
                 bb_df['Date'] = data['Date']
                 rsi_over_70 = []
                 rsi_below_30 = []
+                # a function to append rsi based on different rules
                 for i in range(0, len(data['RSI_SMA'])):
                     if data['RSI_SMA'][i] >= 70:
                         rsi_over_70.append((data['RSI_SMA'])[i])
@@ -378,6 +387,7 @@ try:
                     else:
                         rsi_over_70.append(np.nan)
                         rsi_below_30.append(np.nan)
+                # join the results to the dataframe
                 bb_df['BB_Sell_Signal_Price'] = data['BB_Sell_Signal_Price']
                 bb_df['rsi_over_70'] = rsi_over_70
                 bb_df['BB_Buy_Signal_Price'] = data['BB_Buy_Signal_Price']
@@ -388,7 +398,7 @@ try:
                 tech_df['rsi_over_70'] = bb_df['rsi_over_70']
                 bb_df = bb_df.dropna(thresh=2)
                 bb_df.index = range(len(bb_df))
-
+            # if there is any error display error messages
             except ValueError:
                 st.error("Note If analysing Commodities with Bollinger Bands then the 'End Date' cannot be today ")
 
@@ -629,7 +639,7 @@ try:
     st.write('Expand it to see result')
     tech_df = tech_df.dropna(thresh=2)
     tech_df.index = tech_df['Date']
-
+#display the different dataframe for different chosen indicators and with colour map
     if 'BB_Buy_Signal_Price' in tech_df.columns and not 'MACD_Buy_Signal_Price' in tech_df.columns and not 'OBV_Buy_Signal_Price' in tech_df.columns:
         st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=[
             'BB_Sell_Signal_Price']))
