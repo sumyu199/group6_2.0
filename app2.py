@@ -23,12 +23,12 @@ st.image(image,use_column_width=True)
 st.header("""User Guide """)
 st.write("1.Filter your interested sectors of companies")
 st.write("2.Enter a ticker")
-st.write("3.Enter a start date and end date ")
+st.write("3.Enter a Start date and End date ")
 st.write("4.Choose indicator")
 st.write("5.Check the boxes if you want to know more about the stock")
 st.write("6.Follow the instruction of the indicators to interpret the indicators")
 #create a sidebar header
-st.sidebar.header('User Input Parameter')
+st.sidebar.header('User Inputs')
 
 #function of loading the tickers information
 @st.cache
@@ -76,7 +76,7 @@ st.write(df3)
 today = datetime.date.today()
 def user_input_features():
     ticker = st.sidebar.text_input("Ticker","^HSI")
-    start_date = st.sidebar.date_input('start date', datetime.date(2018,1,1))
+    start_date = st.sidebar.date_input('Start date', datetime.date(2018,1,1))
     end_date = st.sidebar.date_input("End Date", today)
     #indicator selection
     options = ['Select Indicator','Bollinger Bands with RSI','MACD', 'OBV']
@@ -635,10 +635,11 @@ try:
             OBV_df.index = range(len(OBV_df))
 
 
-    st.header('Comparing The Technical Analysis Indications')
-    st.write('Expand it to see result')
+    st.header('Comparing The Technical Analysis Indicatiors')
+    st.write('Expand to display full table')
     tech_df = tech_df.dropna(thresh=2)
     tech_df.index = tech_df['Date']
+    tech_df = tech_df.drop(columns = ['Date'])
 #display the different dataframe for different chosen indicators and with colour map
     if 'BB_Buy_Signal_Price' in tech_df.columns and not 'MACD_Buy_Signal_Price' in tech_df.columns and not 'OBV_Buy_Signal_Price' in tech_df.columns:
         st.dataframe(tech_df.style.applymap(green, subset=['BB_Buy_Signal_Price']).applymap(red, subset=[
